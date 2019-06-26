@@ -223,22 +223,6 @@ export default class InputNumber extends React.Component {
     this.stop();
   }
 
-  getSafePrecision(precision) {
-    const MAX_BOUND = 20
-    const MIN_BOUND = 0
-
-    let validPrecision = precision
-
-    if (process.env.NODE_ENV !== 'production') {
-      if (validPrecision < MIN_BOUND || validPrecision > MAX_BOUND) {
-        console.error(`The 'precision' must be only between ${MIN_BOUND} and ${MAX_BOUND}!`)
-      }
-    }
-
-    // Ensure the legal
-    return Math.max(MIN_BOUND, Math.min(validPrecision, MAX_BOUND))
-  }
-
   onKeyDown = (e, ...args) => {
     const { onKeyDown } = this.props;
 
@@ -315,6 +299,22 @@ export default class InputNumber extends React.Component {
     });
   }
 
+  getSafePrecision(precision) {
+    const MAX_BOUND = 20;
+    const MIN_BOUND = 0;
+
+    const validPrecision = precision;
+
+    if (process.env.NODE_ENV !== 'production') {
+      if (validPrecision < MIN_BOUND || validPrecision > MAX_BOUND) {
+        window.console.error(`The 'precision' must be only between ${MIN_BOUND} and ${MAX_BOUND}!`);
+      }
+    }
+
+    // Ensure the legal
+    return Math.max(MIN_BOUND, Math.min(validPrecision, MAX_BOUND));
+  }
+
   getCurrentValidValue(value) {
     let val = value;
     if (val === '') {
@@ -372,7 +372,7 @@ export default class InputNumber extends React.Component {
 
     // Get safe precision when it is number.
     if (typeof newValue === 'number') {
-      precision = this.getSafePrecision(precision)
+      precision = this.getSafePrecision(precision);
     }
 
     // https://github.com/ant-design/ant-design/issues/7363
@@ -539,7 +539,7 @@ export default class InputNumber extends React.Component {
     }
     let precision = Math.abs(this.getMaxPrecision(num));
     if (!isNaN(precision)) {
-      precision = this.getSafePrecision(precision)
+      precision = this.getSafePrecision(precision);
       return Number(num).toFixed(precision);
     }
     return num.toString();
@@ -562,8 +562,8 @@ export default class InputNumber extends React.Component {
       return num;
     }
     if (isValidProps(this.props.precision)) {
-      let { precision } = this.props
-      precision = this.getSafePrecision(precision)
+      let { precision } = this.props;
+      precision = this.getSafePrecision(precision);
       return Number(Number(num).toFixed(precision));
     }
     return Number(num);
@@ -574,7 +574,7 @@ export default class InputNumber extends React.Component {
     const precisionFactor = this.getPrecisionFactor(val, rat);
     let precision = Math.abs(this.getMaxPrecision(val, rat));
     // Get safe precision
-    precision = this.getSafePrecision(precision)
+    precision = this.getSafePrecision(precision);
 
     const result =
     ((precisionFactor * val + precisionFactor * step * rat) /
@@ -588,7 +588,7 @@ export default class InputNumber extends React.Component {
     const precisionFactor = this.getPrecisionFactor(val, rat);
     let precision = Math.abs(this.getMaxPrecision(val, rat));
     // Get safe precision
-    precision = this.getSafePrecision(precision)
+    precision = this.getSafePrecision(precision);
 
     const result =
     ((precisionFactor * val - precisionFactor * step * rat) /
